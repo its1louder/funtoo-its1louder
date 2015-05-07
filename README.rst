@@ -1,6 +1,8 @@
 Skeleton Overlay
 ================
 
+This overlay is from so and so funtoo user. (its1louder)
+
 This is a "skeleton" overlay -- an empty overlay to use as the starting point
 for collaborating with Funtoo Linux. To start using the overlay, perform the
 following steps:
