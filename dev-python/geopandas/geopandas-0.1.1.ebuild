@@ -35,7 +35,8 @@ RDEPEND="
 	dev-python/descartes
 	dev-python/pySAL
 	dev-python/geopy
-	dev-python/psycopg"
+	dev-python/psycopg
+	dev-python/pyproj"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}"/${P}
