@@ -28,7 +28,7 @@ KEYWORDS="*"
 IUSE="test"
 
 RDEPEND="
-    dev-python/numpy
+	dev-python/numpy
 	dev-python/matplotlib
 	dev-python/ipython
 	dev-python/wxpython
