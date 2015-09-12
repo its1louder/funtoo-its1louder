@@ -11,7 +11,7 @@ PYTHON_REQ_USE='tk?'
 inherit distutils-r1 eutils flag-o-matic virtualx
 
 DESCRIPTION="Pure python plotting library with matlab like syntax"
-HOMEPAGE="http://matplotlib.org/"
+HOMEPAGE="http://matplotlib.org/ https://github.com/matplotlib/matplotlib https://pypi.python.org/pypi/matplotlib"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 SLOT="0"
