@@ -31,7 +31,7 @@ IUSE="test"
 RDEPEND="
 	dev-python/numpy
 	dev-python/matplotlib
-	dev-python/scipy
+	sci-libs/scipy
 	sci-visualization/mayavi"
 DEPEND="${RDEPEND}"
 
