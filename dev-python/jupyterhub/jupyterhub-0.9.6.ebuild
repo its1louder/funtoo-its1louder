@@ -16,12 +16,13 @@ KEYWORDS="amd64 ~arm64 x86"
 IUSE="doc"
 
 DEPEND="
+	net-libs/nodejs
 	dev-python/alembic[${PYTHON_USEDEP}]
 	>=dev-python/async_generator-1.8[${PYTHON_USEDEP}]
 	>=dev-python/certipy-0.1.2[${PYTHON_USEDEP}]
 	dev-python/entrypoints[${PYTHON_USEDEP}]
 	dev-python/jinja[${PYTHON_USEDEP}]
-	>=dev-python/oauthlib-2.0[${PYTHON_USEDEP}]
+	dev-python/python-oauth2[${PYTHON_USEDEP}]
 	dev-python/pamela[${PYTHON_USEDEP}]
 	>=dev-python/prometheus_client-0.0.21[${PYTHON_USEDEP}]
 	dev-python/python-dateutil[${PYTHON_USEDEP}]
