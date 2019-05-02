@@ -15,7 +15,6 @@ DESCRIPTION="a pure Python module for processing hyperspectral image data."
 HOMEPAGE="http://www.spectralpython.net/index.html"
 SRC_URI="https://pypi.python.org/packages/source/s/spectral/${P}.tar.gz"
 
-
 LICENSE="BSD"
 
 SLOT="0"
