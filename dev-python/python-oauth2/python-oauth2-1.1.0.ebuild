@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
+PYTHON_COMPAT=( python3_{4,5,6,7,8} )
 inherit distutils-r1
 
 DESCRIPTION="OAuth 2.0 provider written in python"
