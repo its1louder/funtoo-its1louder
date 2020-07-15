@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{6,7} )
+PYTHON_COMPAT=( python2_7 python3_6 )
 inherit distutils-r1
 
 DESCRIPTION="Statistical and interactive HTML plots for Python"
@@ -15,7 +15,7 @@ SRC_URI="mirror://pypi/${P:0:1}/${PN}/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="amd64 x86 ~amd64-linux ~x86-linux"
-IUSE="examples test"
+IUSE="examples test networkx"
 
 RDEPEND="
 	dev-python/jinja[${PYTHON_USEDEP}]
@@ -28,6 +28,7 @@ RDEPEND="
 	>=www-servers/tornado-4.3[${PYTHON_USEDEP}]
 "
 DEPEND="
+	networkx? (dev-python/networkx[${PYTHON_USEDEP}])
 	dev-python/jinja[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/python-dateutil[${PYTHON_USEDEP}]
@@ -37,6 +38,9 @@ DEPEND="
 	dev-python/six[${PYTHON_USEDEP}]
 	>=net-libs/nodejs-4.1
 	>=www-servers/tornado-4.3[${PYTHON_USEDEP}]
+	dev-python/pandas[${PYTHON_USEDEP}]
+	dev-python/sphinx[${PYTHON_USEDEP}]
+	dev-python/psutil[${PYTHON_USEDEP}]
 	test? (
 		dev-python/beautifulsoup:4[${PYTHON_USEDEP}]
 		dev-python/boto[${PYTHON_USEDEP}]
