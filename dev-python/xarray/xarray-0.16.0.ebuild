@@ -21,7 +21,7 @@ RDEPEND="
 	>=dev-python/pandas-0.19.2[${PYTHON_USEDEP}]"
 
 DEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
+	>=dev-python/setuptools-41.2[${PYTHON_USEDEP}]
 	test? (
 		>=dev-python/dask-0.18.2[${PYTHON_USEDEP}]
 		dev-python/pytest[${PYTHON_USEDEP}]

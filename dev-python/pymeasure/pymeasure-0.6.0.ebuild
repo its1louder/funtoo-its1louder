@@ -3,20 +3,19 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{5,6,7,8} )
 
 inherit distutils-r1
 
 AUTHOR=ralph-group
+MY_PN=PyMeasure
+MY_P=${MY_PN}-${PV}
 
 DESCRIPTION="Scientific measurement library for instruments, experiments, and live-plotting"
 HOMEPAGE="https://github.com/ralph-group/pymeasure"
-#PyMeasure-0.6.0.tar.gz
-SRC_URI="https://github.com/${AUTHOR}/${PN}/archive/v${PV:0:2}.tar.gz -> ${P}.tar.gz"
-#SRC_URI="https://github.com/${AUTHOR}/${PN}/archive/v0.6.tar.gz -> ${P}.tar.gz"
-#SRC_URI="https://github.com/${AUTHOR}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-#SRC_URI="https://github.com/${AUTHOR}/${PN}/tarball/${PV} -> ${P}.tar.gz"
-#SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
+
+SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
+
 
 LICENSE="MIT"
 SLOT="0"
@@ -44,5 +43,6 @@ RDEPEND="${DEPEND}"
 
 #BDEPEND=""
 
-S="${WORKDIR}"/${PN}-0.6
+S="${WORKDIR}"/${MY_PN}-${PV}
+#S="${WORKDIR}/${PN}"
 
