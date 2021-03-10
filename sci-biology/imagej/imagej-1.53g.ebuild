@@ -1,49 +1,50 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-inherit java-pkg-2 java-ant-2 eutils versionator
+EAPI=7
+
+inherit java-pkg-2 java-ant-2 desktop
 
 MY_PN="ij"
-MY_PV=$(delete_all_version_separators)
-
-# NOTE:
-# as plugins are regularly lagging behind, we use the pack released for previous
-# version instead. Change to present version locally if you are sure proper
-# version has been released.
-IJ_PV=$(expr ${MY_PV::3} - 1)
+MY_PV=${PV//.}
+IJ_PV=${MY_PV::-1}
 
 DESCRIPTION="Image Processing and Analysis in Java"
-HOMEPAGE="http://rsb.info.nih.gov/ij/"
+HOMEPAGE="https://imagej.nih.gov/ij/"
 
-SRC_URI="http://imagej.nih.gov/ij/download/src/${MY_PN}${MY_PV}-src.zip
-	http://rsb.info.nih.gov/ij/images/ImageJ.png
-	plugins? ( http://rsb.info.nih.gov/ij/download/zips/${MY_PN}${IJ_PV}.zip )"
+SRC_URI="https://imagej.nih.gov/ij/download/src/${MY_PN}${MY_PV}-src.zip
+	https://rsb.info.nih.gov/ij/images/ImageJ.png
+	plugins? ( https://wsr.imagej.net/distros/cross-platform/${MY_PN}${IJ_PV}.zip )"
+# plugins are under a different licenses and can be installed into user's $IJ_HOME/plugins
+#	plugins? ( http://rsb.info.nih.gov/ij/download/zips/${MY_PN}${IJ_PV}.zip )"
 
-RESTRICT="nomirror"
-LICENSE="public-domain"
+LICENSE="public-domain" # http://imagej.net/disclaimer.html
 SLOT="0"
 
-KEYWORDS="~x86 ~ppc ~amd64"
+KEYWORDS="~amd64"
 
 IUSE="doc plugins debug"
 
-RDEPEND=">=virtual/jre-1.6
-	dev-java/java-config"
-DEPEND=">=virtual/jdk-1.6
+RDEPEND="
+	>=virtual/jre-1.7:*
+	dev-java/java-config
+"
+DEPEND="${RDEPEND}
+	>=virtual/jdk-1.7:*
 	dev-java/ant-core
-	${RDEPEND}"
+	app-arch/unzip
+"
 
-S=${WORKDIR}/source
+S="${WORKDIR}/source"
 IJ_S=${WORKDIR}/ImageJ
 
-src_unpack() {
-	cp ${DISTDIR}/ImageJ.png ${WORKDIR}/${PN}.png
-	unpack ${A}
-	
+src_prepare() {
+	cp "${DISTDIR}"/ImageJ.png "${WORKDIR}/${PN}.png" || die
+
 	if ! use debug ; then
-		sed -i 's: debug="on">: debug="off">:' ${S}/build.xml
+		sed -i 's: debug="on">: debug="off">:' "${S}"/build.xml || die
 	fi
+	default
 }
 
 src_compile() {
@@ -59,16 +60,16 @@ src_compile() {
 		IJ_MAX_MEM=2048
 	fi
 	# build finished, generate startup wrapper
-	cat <<EOF > ${T}/${PN}
-#!/bin/bash
-IJ_LIB=/usr/share/${PN}/lib
+	cat <<EOF > "${T}/${PN}"
+#!${EPREFIX}/bin/bash
+IJ_LIB=${EPREFIX}/usr/share/${PN}/lib
 if !([ "\${IJ_HOME}" ]) ; then
-	IJ_HOME=\${HOME}
+	IJ_HOME=\${HOME}/.imagej
 fi
 if [ -d \${IJ_HOME}/plugins ] ; then
 	IJ_PLG=\${IJ_HOME}
 else
-	IJ_PLG=/usr/share/${PN}/lib
+	IJ_PLG=${EPREFIX}/usr/share/${PN}/lib
 fi
 if !([ "\$IJ_MEM" ]) ; then
 	IJ_MEM=${IJ_MAX_MEM}
@@ -90,26 +91,25 @@ EOF
 
 src_install() {
 	java-pkg_dojar *.jar
-
-	dobin ${T}/${PN}
+	dobin "${T}/${PN}"
 
 	if use plugins ; then
-		cp -R ${IJ_S}/plugins ${D}/usr/share/${PN}/lib/
-		cp -R ${IJ_S}/macros ${D}/usr/share/${PN}/lib/
+		cp -R "${IJ_S}"/plugins "${ED}"/usr/share/"${PN}"/lib/
+		cp -R "${IJ_S}"/macros "${ED}"/usr/share/"${PN}"/lib/
 	fi
 
-	use doc && java-pkg_dohtml -r ${WORKDIR}/api
+	use doc && java-pkg_dohtml -r "${WORKDIR}"/api
 
 	insinto /usr/share/pixmaps
-	doins ${WORKDIR}/${PN}.png
-	make_desktop_entry "imagej %F" "ImageJ" ${PN}.png Graphics
+	doins "${WORKDIR}/${PN}".png
+	make_desktop_entry "${PN}" ImageJ "${PN}" Graphics
 }
 
 pkg_postinst() {
 	einfo ""
 	einfo "You can configure the path of a folder, which contains \"plugins\" directory and IJ_Prefs.txt,"
 	einfo "by setting the environmental variable, \$IJ_HOME."
-	einfo "Default setting is \$IJ_HOME=\${HOME}, i.e. \${HOME}/plugins and \${HOME}/IJ_Prefs.txt."
+	einfo "Default setting is \$IJ_HOME=\${HOME}/.imagej, i.e. \${HOME}/.imagej/plugins and \${HOME}/.imagej/IJ_Prefs.txt."
 	einfo ""
 	einfo "You can also configure the memory size by setting the environmental variable, \$IJ_MEM,"
 	einfo "and the class path by setting the environmental variable, \$IJ_CP."
